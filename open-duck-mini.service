@@ -1,0 +1,13 @@
+[Unit]
+Description=Open Duck Mini Launch Service
+After=network.target
+
+[Service]
+User=jaime
+Restart=always
+RestartSec=0
+StartLimitInterval=0
+ExecStart=/usr/bin/autorun-openduck.sh
+
+[Install]
+WantedBy=default.target

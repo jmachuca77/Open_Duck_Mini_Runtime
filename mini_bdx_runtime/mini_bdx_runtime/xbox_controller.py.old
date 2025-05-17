@@ -55,11 +55,11 @@ class XBoxController:
 
         l_x = -1 * self.p1.get_axis(0)
         l_y = -1 * self.p1.get_axis(1)
-        r_x = -1 * self.p1.get_axis(3)
-        r_y = -1 * self.p1.get_axis(4)
+        r_x = -1 * self.p1.get_axis(2)
+        r_y = -1 * self.p1.get_axis(3)
 
-        right_trigger = np.around((self.p1.get_axis(5) + 1) / 2, 3)
-        left_trigger = np.around((self.p1.get_axis(2) + 1) / 2, 3)
+        right_trigger = np.around((self.p1.get_axis(4) + 1) / 2, 3)
+        left_trigger = np.around((self.p1.get_axis(5) + 1) / 2, 3)
 
         if left_trigger < 0.1:
             left_trigger = 0
@@ -126,18 +126,18 @@ class XBoxController:
                 if self.p1.get_button(1):  # B button
                     self.B_pressed = True
 
-                if self.p1.get_button(2):  # X button
+                if self.p1.get_button(3):  # X button
                     self.X_pressed = True
 
-                if self.p1.get_button(3):  # Y button
+                if self.p1.get_button(4):  # Y button
                     self.Y_pressed = True
                     if not self.only_head_control:
                         self.head_control_mode = not self.head_control_mode
 
-                if self.p1.get_button(4):  # LB button
+                if self.p1.get_button(6):  # LB button
                     self.LB_pressed = True
 
-                if self.p1.get_button(5):  # RB button
+                if self.p1.get_button(7):  # RB button
                     self.RB_pressed = True
 
             if event.type == pygame.JOYBUTTONUP:
