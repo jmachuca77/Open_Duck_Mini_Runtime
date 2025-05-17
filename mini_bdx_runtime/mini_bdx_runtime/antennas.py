@@ -1,4 +1,4 @@
-import RPi.GPIO as GPIO
+from mini_bdx_runtime.gpio import gpio as GPIO
 import numpy as np
 import time
 

@@ -1,27 +1,28 @@
-import RPi.GPIO as GPIO
+import board
+import digitalio
 import numpy as np
 
-
-LEFT_FOOT_PIN = 22
-RIGHT_FOOT_PIN = 27
-
+LEFT_FOOT_PIN = board.D22
+RIGHT_FOOT_PIN = board.D27
 
 class FeetContacts:
     def __init__(self):
-        GPIO.setwarnings(False)  # Ignore warning for now
-        GPIO.setmode(GPIO.BCM)  # Use physical pin numbering
-        GPIO.setup(LEFT_FOOT_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.setup(RIGHT_FOOT_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        self.left_foot = digitalio.DigitalInOut(LEFT_FOOT_PIN)
+        self.left_foot.direction = digitalio.Direction.INPUT
+        self.left_foot.pull = digitalio.Pull.UP
+
+        self.right_foot = digitalio.DigitalInOut(RIGHT_FOOT_PIN)
+        self.right_foot.direction = digitalio.Direction.INPUT
+        self.right_foot.pull = digitalio.Pull.UP
 
     def get(self):
-        left = False
-        right = False
-        if GPIO.input(LEFT_FOOT_PIN) == GPIO.LOW:
-            left = True
-        if GPIO.input(RIGHT_FOOT_PIN) == GPIO.LOW:
-            right = True
+        left = not self.left_foot.value
+        right = not self.right_foot.value
         return np.array([left, right])
 
+    def __del__(self):
+        self.left_foot.deinit()
+        self.right_foot.deinit()
 
 if __name__ == "__main__":
     import time
