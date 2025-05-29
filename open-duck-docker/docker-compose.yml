@@ -1,0 +1,32 @@
+# version: '3.8'
+
+services:
+  mini_bdx:
+    # build & tag your image (or replace with `image: open-duck-ros-jazzy:latest` if you’ve
+    # already built it locally)
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: open-duck-ros-jazzy:latest
+
+    # exactly like --network host
+    network_mode: host
+
+    # exactly like --privileged
+    privileged: true
+
+    # exactly like --device=/dev/ttyACM0
+    devices:
+      - "/dev/ttyACM0:/dev/ttyACM0"
+      - "/dev/i2c-1:/dev/i2c-1"
+    # exactly like -v /home/jaime/bdx_ws:/bdx_ws
+    volumes:
+      - /home/jaime/bdx_ws:/bdx_ws
+
+    # exactly like -it
+    stdin_open: true
+    tty: true
+
+    # entrypoint & command as before
+    entrypoint: ["/ros_entrypoint.sh"]
+    command: ["bash"]
