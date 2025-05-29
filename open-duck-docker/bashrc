@@ -1,0 +1,51 @@
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+
+# Shell history fixes
+SHELL_SESSION_HISTORY=0
+
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
+# uncomment for a colored prompt, if the terminal has the capability; turned
+# off by default to not distract the user: the focus in a terminal window
+# should be on the output of commands, not on the prompt
+force_color_prompt=yes
+
+# if forcing color, turn on color_prompt
+if [ "$force_color_prompt" = yes ]; then
+  color_prompt=yes
+fi
+
+################### New Prompt ###################
+
+parse_git_branch() {
+
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
+
+}
+
+if [ "$color_prompt" = yes ]; then
+    export PS1="\[\033[38;5;33m\]\u@\e[38;5;208m\H\[$(tput sgr0)\]\[\033[38;5;15m\][\[$(tput sgr0)\]\[\033[38;5;11m\]\w\[$(tput sgr0)\]\[\033[38;5;15m\]]\\n(\[\033[38;5;11m\]\$(parse_git_branch)\[\033[38;5;15m\]) \[\033[32m\]\$\[$(tput sgr0)\] "
+else
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+fi
+unset color_prompt force_color_prompt
+
+####################################################
+
+#export LSCOLORS="di=10:ex=92:"
+export LSCOLORS=gxFxCxDxCxegedabagaced
+
+alias ls='ls -G'
+alias ll='ls -lG'
+
+echo "Sourcing ROS 2 setup"
+source /opt/ros/jazzy/setup.bash
+
+echo "Sourcing bdx_ws"
+source /bdx_ws/install/setup.bash
