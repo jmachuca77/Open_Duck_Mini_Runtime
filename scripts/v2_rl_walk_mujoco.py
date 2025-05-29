@@ -39,6 +39,7 @@ class RLWalk:
 
         self.duck_config = DuckConfig(config_json_path=duck_config_path)
 
+        self.enabled = False
         self.commands = commands
         self.pitch_bias = pitch_bias
 
@@ -181,6 +182,7 @@ class RLWalk:
         self.hwi.set_kps(kps)
         self.hwi.set_kds(kds)
         self.hwi.turn_on()
+        self.enabled = True
 
         time.sleep(2)
 
@@ -228,8 +230,15 @@ class RLWalk:
                         self.phase_frequency_factor = 1.0
 
                     if self.buttons.X.triggered:
-                        if self.duck_config.projector:
-                            self.projector.switch()
+                        if self.enabled:
+                            self.enabled = False
+                            self.hwi.turn_off()
+                        else:
+                            self.enabled = True
+                            self.start()
+                        
+                        # if self.duck_config.projector:
+                        #     self.projector.switch()
 
                     if self.buttons.B.triggered:
                         if self.duck_config.speaker:
@@ -331,9 +340,13 @@ class RLWalk:
             if self.duck_config.antennas:
                 self.antennas.stop()
 
-        if self.save_obs:
-            pickle.dump(self.saved_obs, open("robot_saved_obs.pkl", "wb"))
-        print("TURNING OFF")
+        finally:
+            # ensure the hardware is turned off on exit
+            self.hwi.turn_off()
+
+            if self.save_obs:
+                pickle.dump(self.saved_obs, open("robot_saved_obs.pkl", "wb"))
+            print("TURNING OFF")
 
 
 if __name__ == "__main__":
