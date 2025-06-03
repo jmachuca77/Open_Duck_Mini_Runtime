@@ -39,9 +39,10 @@ unset color_prompt force_color_prompt
 ####################################################
 
 #export LSCOLORS="di=10:ex=92:"
-export LSCOLORS=gxFxCxDxCxegedabagaced
+#export LSCOLORS=gxFxCxDxCxegedabagaced
+export LS_COLORS="di=36:fi=0:ex=32:ln=35:pi=33:so=35:bd=34;46:cd=34;43:or=31;01:mi=05;37;41"
 
-alias ls='ls -G'
+alias ls='ls --color=always'
 alias ll='ls -lG'
 
 echo "Sourcing ROS 2 setup"
