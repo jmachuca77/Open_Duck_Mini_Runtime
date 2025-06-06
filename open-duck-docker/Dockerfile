@@ -11,6 +11,7 @@ RUN apt-get update \
       ros-$ROS_DISTRO-joint-state-publisher \
       ros-$ROS_DISTRO-joint-state-publisher-gui \
       ros-$ROS_DISTRO-bno055 \
+      ros-$ROS_DISTRO-teleop-twist-keyboard \
       build-essential \
  && rm -rf /var/lib/apt/lists/*
 
