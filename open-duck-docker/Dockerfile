@@ -12,6 +12,7 @@ RUN apt-get update \
       ros-$ROS_DISTRO-joint-state-publisher-gui \
       ros-$ROS_DISTRO-bno055 \
       ros-$ROS_DISTRO-teleop-twist-keyboard \
+      ros-$ROS_DISTRO-teleop-twist-joy \
       build-essential \
  && rm -rf /var/lib/apt/lists/*
 
@@ -53,6 +54,17 @@ RUN apt-get update \
 
 RUN /opt/venv/bin/pip install empy \
  && /opt/venv/bin/pip install lark-parser
+
+SHELL ["/bin/bash", "-c"]
+
+RUN mkdir -p /bdx_ws/src \
+ && cd /bdx_ws/src \
+ && git clone https://github.com/jmachuca77/open_duck_mini_description \
+ && git clone https://github.com/jmachuca77/joystick_drivers 
+
+RUN source /opt/ros/jazzy/setup.bash \
+ && cd /bdx_ws \
+ && colcon build --packages-select open_duck_mini_description joy
 
 COPY ./inputrc /root/.inputrc
 COPY ./bashrc /root/.bashrc
