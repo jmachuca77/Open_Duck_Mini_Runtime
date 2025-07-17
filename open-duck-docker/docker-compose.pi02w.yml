@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  outpost77:
+    build:
+      context: .
+      dockerfile: Dockerfile.pi02w
+    image: open-duck-mini-pi02w:latest
+    container_name: open-duck-mini-pi02w
+
+    # exactly like --network host
+    network_mode: host
+
+    # exactly like --privileged
+    privileged: true
+
+    # grant access to all input devices (major 13) at runtime
+    device_cgroup_rules:
+      - 'c 13:* rmw'
+
+    # mount the host’s /dev/input (so new joystick nodes appear automatically)
+    # also mount any specific static devices you know you’ll need (e.g. /dev/ttyACM0)
+    volumes:
+      # - $HOME/bdx_ws:/bdx_ws                 # uncomment this if you want to use a dev workspace outside the container
+      - /dev/input:/dev/input                # bind‐mount the entire input directory
+      - /dev/ttyACM0:/dev/ttyACM0            # if /dev/ttyACM0 is already present at startup
+      - /dev/i2c-1:/dev/i2c-1                # same for I²C bus
+
+    # exactly like -it
+    stdin_open: true
+    tty: true
+
+    command: ["bash"]
+
+    # (Optional) if you want live code-sync during development:
+    # volumes:
+    #   - .:/app
+    # Environment variables, ports, etc:
+    # environment:
+    #   - PYTHONUNBUFFERED=1
+    # ports:
+    #   - "8000:8000"
+    # command override (if different than Dockerfile’s CMD):
+    # command: ["python", "app.py"]
+    restart: unless-stopped
