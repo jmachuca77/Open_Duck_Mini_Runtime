@@ -2,10 +2,11 @@ version: '3.8'
 
 services:
   outpost77:
+    image: outpost77/open-duck-mini-pi02w:latest
     build:
       context: .
       dockerfile: Dockerfile.pi02w
-    image: open-duck-mini-pi02w:latest
+
     container_name: open-duck-mini-pi02w
 
     # exactly like --network host

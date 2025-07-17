@@ -1,46 +1,44 @@
-# Use the multi-arch Python 3.10 slim image (will pull the arm64 build on your Pi Zero 2 W)
-FROM python:3.10-slim-bullseye
+# Dockerfile.pi02w
 
-# Set a working directory
+# 1) Use the Pi-OS image with Python 3.10 already installed
+FROM dtcooper/raspberrypi-os:python3.10-bookworm
+
+# 2) Set your workdir
 WORKDIR /app
 
+# 3) Install only what you need at build time (incl. the distro lgpio package)
 RUN apt-get update \
  && apt-get install -y --no-install-recommends \
-      python3-pip \
       python3-venv \
+      python3-pip \
+      python3-lgpio \    
       python3-empy \
-      python3-catkin-pkg-modules \
+      nano \
+      git \
  && rm -rf /var/lib/apt/lists/*
 
-# 2) Create a virtualenv under /opt/venv and put it first on PATH
+# 4) Create & activate your venv
 RUN python3 -m venv /opt/venv \
  && /opt/venv/bin/pip install --upgrade pip \
- && /opt/venv/bin/pip install catkin_pkg
+ && /opt/venv/bin/pip install PyYAML \
+#  && /opt/venv/bin/pip install empy \
+ && /opt/venv/bin/pip install lark-parser
 
 ENV VIRTUAL_ENV=/opt/venv
-ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+ENV PATH="/opt/venv/bin:${PATH}"
 
-# 3) Now pip works un-protected. Install your runtime package & lgpio
+# 5) Now pip works un-protected. Install your runtime package & lgpio
 RUN git clone --branch v2 https://github.com/apirrone/Open_Duck_Mini_Runtime \
  && cd Open_Duck_Mini_Runtime \
- && pip install -e . lgpio \
- && /opt/venv/bin/pip install PyYAML
-
-RUN apt-get update \
- && apt-get install -y --no-install-recommends \
-    nano \
- && rm -rf /var/lib/apt/lists/*
-
-RUN /opt/venv/bin/pip install empy \
- && /opt/venv/bin/pip install lark-parser
+ && pip install -e . 
 
 SHELL ["/bin/bash", "-c"]
 
 COPY ./inputrc /root/.inputrc
 COPY ./bashrc /root/.bashrc
 COPY ./duck_config.json /root/duck_config.json
-COPY ./entrypoint.sh /entrypoint.sh
 
-# Default command
-ENTRYPOINT ["/ros_entrypoint.sh"]
+# 7) Entrypoint & default
+COPY entrypoint.sh /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["bash"]
