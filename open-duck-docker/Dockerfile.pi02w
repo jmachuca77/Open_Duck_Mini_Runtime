@@ -2,6 +2,7 @@
 
 # 1) Use the Pi-OS image with Python 3.10 already installed
 FROM dtcooper/raspberrypi-os:python3.10-bookworm
+ENV DEBIAN_FRONTEND=noninteractive
 
 # 2) Set your workdir
 WORKDIR /app
@@ -11,8 +12,8 @@ RUN apt-get update \
  && apt-get install -y --no-install-recommends \
       python3-venv \
       python3-pip \
-      python3-lgpio \    
       python3-empy \
+      build-essential \
       nano \
       git \
  && rm -rf /var/lib/apt/lists/*
@@ -25,12 +26,16 @@ RUN python3 -m venv /opt/venv \
  && /opt/venv/bin/pip install lark-parser
 
 ENV VIRTUAL_ENV=/opt/venv
-ENV PATH="/opt/venv/bin:${PATH}"
+ENV PATH="$VIRTUAL_ENV/bin:${PATH}"
 
 # 5) Now pip works un-protected. Install your runtime package & lgpio
 RUN git clone --branch v2 https://github.com/apirrone/Open_Duck_Mini_Runtime \
  && cd Open_Duck_Mini_Runtime \
- && pip install -e . 
+ && pip install -e . lgpio \
+ && /opt/venv/bin/pip install PyYAML
+
+RUN /opt/venv/bin/pip install empy \
+ && /opt/venv/bin/pip install lark-parser
 
 SHELL ["/bin/bash", "-c"]
 
