@@ -35,7 +35,7 @@ RUN git clone --branch v2 https://github.com/apirrone/Open_Duck_Mini_Runtime \
 SHELL ["/bin/bash", "-c"]
 
 COPY ./inputrc /root/.inputrc
-COPY ./bashrc /root/.bashrc
+COPY ./bashrc.pi02w /root/.bashrc
 COPY ./duck_config.json /root/duck_config.json
 
 # 7) Entrypoint & default
