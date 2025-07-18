@@ -26,7 +26,8 @@ services:
       - /dev/input:/dev/input                # bind‐mount the entire input directory
       - /dev/ttyACM0:/dev/ttyACM0            # if /dev/ttyACM0 is already present at startup
       - /dev/i2c-1:/dev/i2c-1                # same for I²C bus
-
+      - /home/jaime/Open_Duck_Mini_Runtime/checkpoints:/root/checkpoints
+      - /home/jaime/Open_Duck_Mini_Runtime/mini_bdx_runtime/mini_bdx_runtime/xbox_controller.py:/app/Open_Duck_Mini_Runtime/mini_bdx_runtime/mini_bdx_runtime/xbox_controller.py
     # exactly like -it
     stdin_open: true
     tty: true
