@@ -28,6 +28,8 @@ RUN python3 -m venv /opt/venv \
 ENV VIRTUAL_ENV=/opt/venv
 ENV PATH="$VIRTUAL_ENV/bin:${PATH}"
 
+RUN /opt/venv/bin/pip install RPi.GPIO
+
 # 5) Now pip works un-protected. Install your runtime package & lgpio
 RUN git clone --branch v2 https://github.com/apirrone/Open_Duck_Mini_Runtime \
  && cd Open_Duck_Mini_Runtime \
