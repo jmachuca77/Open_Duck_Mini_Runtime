@@ -31,7 +31,7 @@ ENV PATH="$VIRTUAL_ENV/bin:${PATH}"
 RUN /opt/venv/bin/pip install RPi.GPIO
 
 # 5) Now pip works un-protected. Install your runtime package & lgpio
-RUN git clone --branch v2 https://github.com/apirrone/Open_Duck_Mini_Runtime \
+RUN git clone --branch upgrades https://github.com/jmachuca77/Open_Duck_Mini_Runtime \
  && cd Open_Duck_Mini_Runtime \
  && pip install -e . lgpio \
  && /opt/venv/bin/pip install PyYAML
@@ -41,6 +41,7 @@ RUN /opt/venv/bin/pip install empy \
 
 SHELL ["/bin/bash", "-c"]
 
+COPY ./run.sh /app/run.sh
 COPY ./inputrc /root/.inputrc
 COPY ./bashrc.pi02w /root/.bashrc
 COPY ./duck_config.json /root/duck_config.json
