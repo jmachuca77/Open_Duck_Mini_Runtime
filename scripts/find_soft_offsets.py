@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Find the offsets to set in self.joints_offsets in hwi_feetech_pwm_control.py
 """

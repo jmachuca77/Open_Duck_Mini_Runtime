@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Sets up the robot in init position, you control the head with the xbox controller
 """

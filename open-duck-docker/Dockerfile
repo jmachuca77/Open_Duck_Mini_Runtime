@@ -66,6 +66,7 @@ RUN source /opt/ros/jazzy/setup.bash \
  && cd /bdx_ws \
  && colcon build --packages-select open_duck_mini_description joy
 
+COPY ../checkpoints/ /root/checkpoints/
 COPY ./inputrc /root/.inputrc
 COPY ./bashrc /root/.bashrc
 COPY ./duck_config.json /root/duck_config.json

@@ -46,6 +46,7 @@ class DuckConfig:
                 print("Exiting...")
                 exit(1)
 
+        self.debug = self.json_config.get("debug", False)
         self.start_paused = self.json_config.get("start_paused", False)
         self.imu_upside_down = self.json_config.get("imu_upside_down", False)
         self.phase_frequency_factor_offset = self.json_config.get(

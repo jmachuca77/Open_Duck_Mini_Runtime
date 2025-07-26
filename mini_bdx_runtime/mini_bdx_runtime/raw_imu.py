@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import adafruit_bno055
 import board
 import busio
@@ -28,6 +29,7 @@ class Imu:
         # self.imu.mode = adafruit_bno055.NDOF_FMC_OFF_MODE
 
         if upside_down:
+            print("IMU Configures as Upside Down")
             self.imu.axis_remap = (
                 adafruit_bno055.AXIS_REMAP_Y,
                 adafruit_bno055.AXIS_REMAP_X,
@@ -38,6 +40,7 @@ class Imu:
             )
 
         else:
+            print("IMU Configured as Right Side Up")
             self.imu.axis_remap = (
                 adafruit_bno055.AXIS_REMAP_Y,
                 adafruit_bno055.AXIS_REMAP_X,
@@ -52,7 +55,9 @@ class Imu:
             calibrated = self.imu.calibrated
             while not calibrated:
                 print("Calibration status: ", self.imu.calibration_status)
-                print("Calibrated : ", self.imu.calibrated)
+                system, gyro, accel, mag = self.imu.calibration_status
+                print("Sys: ", system, ", Gyro: ", gyro, ", Accel: ", accel, ", Mag: ", mag)
+                print("-----------------------------------")
                 calibrated = self.imu.calibrated
                 time.sleep(0.1)
             print("CALIBRATION DONE")
