@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from pypot.feetech import FeetechSTS3215IO
 import pickle
 import numpy as np

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import pygame
 from threading import Thread
 from queue import Queue

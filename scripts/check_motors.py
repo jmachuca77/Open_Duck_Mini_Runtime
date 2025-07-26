@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Debug script to check all motors in the robot.
 Verifies each motor is accessible and allows testing movement.
