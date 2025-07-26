@@ -27,6 +27,8 @@ services:
       - /dev/ttyACM0:/dev/ttyACM0            # if /dev/ttyACM0 is already present at startup
       - /dev/i2c-1:/dev/i2c-1                # same for I²C bus
       - /home/jaime/Open_Duck_Mini_Runtime/checkpoints:/root/checkpoints
+      - /home/jaime/duck_config.json:/root/duck_config.json
+      - /home/jaime/imu_calib_data.pkl:/app/Open_Duck_Mini_Runtime/scripts/imu_calib_data.pkl
       - /home/jaime/Open_Duck_Mini_Runtime/mini_bdx_runtime/mini_bdx_runtime/xbox_controller.py:/app/Open_Duck_Mini_Runtime/mini_bdx_runtime/mini_bdx_runtime/xbox_controller.py
     # exactly like -it
     stdin_open: true

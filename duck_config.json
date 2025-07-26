@@ -1,0 +1,30 @@
+{
+	"debug": false,
+    "start_paused": true,
+    "imu_upside_down": true,
+    "phase_frequency_factor_offset": 0.0,
+    "expression_features": {
+        "eyes": false,
+        "projector": false,
+        "antennas": false,
+        "speaker": false,
+        "microphone": false,
+        "camera": false
+    },
+    "joints_offsets": {
+		"left_hip_yaw" : 0.127,
+		"left_hip_roll" : 0.0,
+		"left_hip_pitch" : -0.026,
+		"left_knee" : 0.224,
+		"left_ankle" : 0.15,
+		"neck_pitch" : 0.07500000000000001,
+		"head_pitch" : 0.0,
+		"head_yaw" : -0.031,
+		"head_roll" : 0.122,
+		"right_hip_yaw" : 0.001,
+		"right_hip_roll" : 0.077,
+		"right_hip_pitch" : 0.015,
+		"right_knee" : -0.019999999999999997,
+		"right_ankle" : 0.073
+    }
+}
