@@ -5,5 +5,5 @@ source /opt/ros/jazzy/setup.bash
 echo "Sourcing bdx_ws"
 source /bdx_ws/install/setup.bash
 # then exec whatever the user passed in
-ros2 launch open_duck_mini_description display.launch.py 
+#ros2 launch open_duck_mini_description display.launch.py 
 exec "$@"
