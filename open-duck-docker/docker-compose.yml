@@ -20,10 +20,14 @@ services:
     # mount the host’s /dev/input (so new joystick nodes appear automatically)
     # also mount any specific static devices you know you’ll need (e.g. /dev/ttyACM0)
     volumes:
-      # - $HOME/bdx_ws:/bdx_ws                 # uncomment this if you want to use a dev workspace outside the container
+      - $HOME/bdx_ws:/bdx_ws                 # uncomment this if you want to use a dev workspace outside the container
       - /dev/input:/dev/input                # bind‐mount the entire input directory
       - /dev/ttyACM0:/dev/ttyACM0            # if /dev/ttyACM0 is already present at startup
       - /dev/i2c-1:/dev/i2c-1                # same for I²C bus
+      # allow Bleak to talk to BlueZ over D-Bus:
+      - /var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket:ro
+      # (optional) give visibility on /sys/class/bluetooth:
+      - /sys/class/bluetooth:/sys/class/bluetooth:ro
 
     # exactly like -it
     stdin_open: true
